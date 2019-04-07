@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -36,11 +29,11 @@ namespace WindowsFormsApp1
         /// <summary>
         /// 制限時間
         /// </summary>
-        int timeLimit = 1;
+        int timeLimit = 10;
         /// <summary>
-        /// デッキを引いたしるし(0:デッキを引いていない/1:デッキを引いた)
+        /// デッキからカードをドローしたか否か
         /// </summary>
-        int deck = 0;
+        bool deck = false;
         #endregion
 
         public frmField()
@@ -61,7 +54,11 @@ namespace WindowsFormsApp1
             myTurnEnd = myTurnStart.AddSeconds(timeLimit); //自分のターン終了時刻を取得(制限時間60秒)
         }
 
-        /*自分のターンの制限時間を計るタイマー*/
+        /// <summary>
+        /// 自分のターンの制限時間を計るタイマー
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timerMyTurn_Tick(object sender, EventArgs e)
         {
             DateTime nowTime; //現在時刻を取得するための変数
@@ -76,14 +73,17 @@ namespace WindowsFormsApp1
                 timerMyTurn.Enabled = false; //タイマーを停止
             }
         }
-
-        /*デッキがクリックされた場合*/
+        
+        /// <summary>
+        /// デッキがクリックされた場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lblAddCard_Click(object sender, EventArgs e)
         {
-            {
-                if (deck == 0) //デッキを引いていない場合
+                if (deck == false) //デッキを引いていない場合
                 {
-                    deck = 1; //デッキを引いたしるし
+                    deck = true; //デッキを引いたしるし
                     deckNum -= 1; //カードを1枚ドロー
                      //lblAddCard.Image = ""; //デッキの数が減ったイメージに入れ替え
                     deckDrawTime = DateTime.Now; //デッキを引いた時刻を取得
@@ -93,7 +93,11 @@ namespace WindowsFormsApp1
             }
         }
 
-        /*デッキが引かれた動きを表現するためのタイマー*/
+        /// <summary>
+        /// デッキからカードが引かれた動きを表現するためのタイマー
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timerDrawCard_Tick(object sender, EventArgs e)
         {
             if (lblAddCard.Top <= 550) //デッキドロー時のy座標がフォームからはみ出るまで
@@ -112,17 +116,17 @@ namespace WindowsFormsApp1
             }
         }
 
-
-
-        /*ターン終了ボタン*/
+        /// <summary>
+        /// ターン終了ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lblMyTurnEnd_Click(object sender, EventArgs e)
         {
             timerMyTurn.Enabled = false; //タイマーを停止
             timeLimit = 60; //制限時間を初期化
             //相手のターン
         }
-
-
 
         /*カード1がクリックされた場合*/
         //private void lblMyCard1_Click(object sender, EventArgs e)
