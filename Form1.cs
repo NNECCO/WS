@@ -5,25 +5,25 @@ namespace WindowsFormsApp1
 {
     public partial class frmField : Form
     {
-        #region #フィールド#
+        #region#フィールド#
         /// <summary>
-        /// デッキの枚数
+        /// デッキの数
         /// </summary>
         int deckNum = 30;
         /// <summary>
-        /// 自分のターンの始まり
+        /// 自分のターン始まり
         /// </summary>
-        DateTime myTrunStart;
+        DateTime myTurnStart;
         /// <summary>
-        /// 自分のターンの終わり
+        /// 自分のターン終わり
         /// </summary>
-        DateTime myTrunEnd;
+        DateTime myTurnEnd;
         /// <summary>
         /// デッキを引いた時刻
         /// </summary>
         DateTime deckDrawTime;
         /// <summary>
-        /// デッキを引いてから0.5s後
+        /// デッキを引いてから0.5秒後
         /// </summary>
         DateTime deckDrawTimePlus05;
         /// <summary>
@@ -31,7 +31,7 @@ namespace WindowsFormsApp1
         /// </summary>
         int timeLimit = 10;
         /// <summary>
-        /// デッキからカードをドロー下か否か
+        /// デッキからカードをドローしたか否か
         /// </summary>
         bool deck = false;
         #endregion
@@ -49,9 +49,9 @@ namespace WindowsFormsApp1
         private void frmField_Load(object sender, EventArgs e)
         {
             /*自分のターンが来た場合*/
-            myTrunStart = DateTime.Now; //現在時刻を取得(自分のターン開始時刻を取得)
-            timerMyTrun.Enabled = true; //自分のターンの制限時間を計るタイマーを起動
-            myTrunEnd = myTrunStart.AddSeconds(timeLimit); //自分のターン終了時刻を取得(制限時間を加算した時刻がターン終了時刻)
+            myTurnStart = DateTime.Now; //現在時刻を取得(自分のターン開始時刻を取得)
+            timerMyTurn.Enabled = true; //自分のターンの制限時間を計るタイマーを起動
+            myTurnEnd = myTurnStart.AddSeconds(timeLimit); //自分のターン終了時刻を取得(制限時間60秒)
         }
 
         /// <summary>
@@ -59,21 +59,21 @@ namespace WindowsFormsApp1
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void timerMyTrun_Tick(object sender, EventArgs e)
+        private void timerMyTurn_Tick(object sender, EventArgs e)
         {
             DateTime nowTime; //現在時刻を取得するための変数
             nowTime = DateTime.Now; //1秒間隔で現在時刻を取得
             timeLimit -= 1; //制限時間を1秒ごとに減らす
             lblTimeLimit.Text = timeLimit.ToString(); //制限時間を表示
 
-            if (myTrunEnd <= nowTime) //現在時刻が自分のターン終了時刻を過ぎた場合
+            if (myTurnEnd <= nowTime) //現在時刻が自分のターン終了時刻を過ぎた場合
             {
                 lblResult.Text = "You Lose..."; //自分は敗北
                 lblResult.Visible = true; //敗北メッセージを表示
-                timerMyTrun.Enabled = false; //タイマーを停止
+                timerMyTurn.Enabled = false; //タイマーを停止
             }
         }
-
+        
         /// <summary>
         /// デッキがクリックされた場合の処理
         /// </summary>
@@ -81,7 +81,6 @@ namespace WindowsFormsApp1
         /// <param name="e"></param>
         private void lblAddCard_Click(object sender, EventArgs e)
         {
-            {
                 if (deck == false) //デッキを引いていない場合
                 {
                     deck = true; //デッキを引いたしるし
@@ -117,21 +116,17 @@ namespace WindowsFormsApp1
             }
         }
 
-
-
         /// <summary>
         /// ターン終了ボタン
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lblMyTrunEnd_Click(object sender, EventArgs e)
+        private void lblMyTurnEnd_Click(object sender, EventArgs e)
         {
-            timerMyTrun.Enabled = false; //タイマーを停止
+            timerMyTurn.Enabled = false; //タイマーを停止
             timeLimit = 60; //制限時間を初期化
             //相手のターン
         }
-
-
 
         /*カード1がクリックされた場合*/
         //private void lblMyCard1_Click(object sender, EventArgs e)
