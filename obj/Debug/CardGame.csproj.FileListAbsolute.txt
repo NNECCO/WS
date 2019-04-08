@@ -1,0 +1,12 @@
+C:\Users\shitu\source\repos\CardGame\bin\Debug\CardGame.exe.config
+C:\Users\shitu\source\repos\CardGame\bin\Debug\CardGame.exe
+C:\Users\shitu\source\repos\CardGame\bin\Debug\CardGame.pdb
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.BattleControl.resources
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.MainForm.resources
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.Properties.Resources.resources
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.TitleControl.resources
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.csproj.GenerateResource.cache
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.csproj.CoreCompileInputs.cache
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.exe
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.pdb
+C:\Users\shitu\source\repos\CardGame\obj\Debug\CardGame.csprojAssemblyReference.cache
