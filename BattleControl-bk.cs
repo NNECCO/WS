@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CardGame {
@@ -10,25 +9,31 @@ namespace CardGame {
         /// 定義クラス
         /// </summary>
         private Definition m_definition;
-        
+        /// <summary>
+        /// デッキ構築開始メッセージアニメーション用ハンドル
+        /// </summary>
+        private ManualResetEvent m_deckConstructAnimationWaitHandle;
+
         public BattleControl() {
             InitializeComponent();
             /*Designerクラスでリテラル扱いされる値を変数で再定義*/
             //画面サイズ
-            Size = new Size(Definition.DISPLAY_WIDTH, Definition.DISPLAY_HEIGHT);
-            //背景画像の位置
-            Battle_pictureBox.Location = new Point(Definition.BTL_BACK_IMG_LOCATION_X, Definition.BTL_BACK_IMG_LOCATION_Y);
-            //背景画像のサイズ
-            Battle_pictureBox.Size = new Size(Definition.DISPLAY_WIDTH, Definition.DISPLAY_HEIGHT);
+            Size = new System.Drawing.Size(Definition.DISPLAY_WIDTH, Definition.DISPLAY_HEIGHT);
+            //背景画像の位置とサイズ
+            Battle_pictureBox.Location = new System.Drawing.Point(Definition.BTL_BACK_IMG_LOCATION_X, Definition.BTL_BACK_IMG_LOCATION_Y);
+            Battle_pictureBox.Size = new System.Drawing.Size(Definition.DISPLAY_WIDTH, Definition.DISPLAY_HEIGHT);
 
             m_definition = new Definition();
         }
 
-        public async void BattleStart() {
+        public void BattleStart() {
+            m_deckConstructAnimationWaitHandle = new ManualResetEvent(false);
+            Thread animateDeckConstructTextBoxThread = new Thread(new ThreadStart(AnimateDeckConstructTextBox));
             //デッキ構築開始メッセージを画面中央、左から右に走らせる
-            await Task.Run(() => AnimateDeckConstructTextBox());
-            //デッキを構築する
-
+            animateDeckConstructTextBoxThread.Start();
+            //アニメーションの終了待機
+            //m_deckConstructAnimationWaitHandle.WaitOne();
+            //MessageBox.Show("aaa");
         }
 
         private void AnimateDeckConstructTextBox() {
@@ -72,6 +77,8 @@ namespace CardGame {
             //背景画像の透明度を戻す
             float alpha = 1.0f;
             TransParentBackGroundImage(alpha);
+            //メイン処理にアニメーションの終了を通知
+            m_deckConstructAnimationWaitHandle.Set();
         }
 
         private void BattleControl_Load(object sender, System.EventArgs e) {
