@@ -8,23 +8,28 @@ namespace CardGame {
 
     class Player {
 
-        #region #フィールド#
-        /// <summary>
-        /// ライフポイント
-        /// </summary>
-        private int m_lifePoint;
+        #region###フィールド###
         /// <summary>
         /// 手札
         /// </summary>
-        private List<Card> m_hand;
+        public List<Card> m_hand;
         /// <summary>
         /// デッキ
         /// </summary>
-        private List<Card> m_deck;
+        public List<Card> m_deck;
+        
+        #endregion
+
+        #region###プロパティ###
+        /// <summary>
+        /// ライフポイント
+        /// </summary>
+        public int Life_Point { get; set; } = 15;
         #endregion
 
         public Player() {
-
+            m_hand = new List<Card>();
+            m_deck = new List<Card>();
         }
 
     }

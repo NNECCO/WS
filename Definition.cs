@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 
 namespace CardGame {
+
     class Definition {
 
-        #region #定数#
+        #region###定数###
 
-        #region #共通#
+        #region##共通##
         /// <summary>
         /// ゲーム画面の幅
         /// </summary>
@@ -17,16 +20,12 @@ namespace CardGame {
         /// </summary>
         public const int DISPLAY_HEIGHT = 700;
         /// <summary>
-        /// 実行ファイルからImageフォルダまでの相対パス
+        /// 改行コード
         /// </summary>
-        private const string RELATIVE_PATH_IMAGE = @"..\..\";
-        /// <summary>
-        /// 画像を保存するフォルダ名
-        /// </summary>
-        private const string DIRECTORY_IMAGE = @"Image\";
+        private const string CRLF = "\r\n";
         #endregion
 
-        #region #タイトル#
+        #region##タイトル##
         /// <summary>
         /// タイトル画像のファイル名
         /// </summary>
@@ -60,7 +59,7 @@ namespace CardGame {
 
         #endregion
 
-        #region #バトル#
+        #region##バトル##
         /// <summary>
         /// バトル画面の背景画像のファイル名
         /// </summary>
@@ -93,7 +92,14 @@ namespace CardGame {
         /// タイトル画面からバトル画面に遷移したときに流れるtextBoxのy座標
         /// </summary>
         public const int BTL_TXTBOX_DECK_CONSTRUCT_Y = (DISPLAY_HEIGHT - BTL_TXTBOX_DECK_CONSTRUCT_HEIGHT)/2;
-
+        /// <summary>
+        /// デッキの構成枚数
+        /// </summary>
+        public const int NUM_DECK = 10;
+        /// <summary>
+        /// デッキ構成時、当選したカードの当選確率を減らす値
+        /// </summary>
+        public const double PROBABILITY_SUBTRACT = 4.0;
         #region #カード#
         /// <summary>
         /// カードの高さ
@@ -103,16 +109,99 @@ namespace CardGame {
         /// カードの幅
         /// </summary>
         public const int CARD_WIDTH = 223;
-        //カードの定義もここで行う
-        //const int MONS1_HP = 100;
-        //new Card(MONS1_NAME, MONS1_HP, ...)というようにして、定義は固定値、カードの実体は変数で持てるようにする
+
+        #region#いっぷく#
+        private const string FILENAME_CARD1 = "ねこ.png";
+        private const string NAME_CARD1 = "いっぷく";
+        private const int HP_CARD1 = 100;
+        private const int ATK_CARD1 = 40;
+        private const int DEF_CARD1 = 20;
+        private const int COST_CARD1 = 3;
+        private const string TEXT_CARD1 = "煙草の煙。" + CRLF + "非常に強力で目にしみる。" + CRLF + "受動喫煙への罪悪感を抱いている。";
         #endregion
+
+        #region#ぺんぎん#
+        private const string FILENAME_CARD2 = "ぺんぎん.png";
+        private const string NAME_CARD2 = "ぺれー帽";
+        private const int HP_CARD2 = 80;
+        private const int ATK_CARD2 = 30;
+        private const int DEF_CARD2 = 40;
+        private const int COST_CARD2 = 3;
+        private const string TEXT_CARD2 = "ぺんぎん。";
+        #endregion
+
+        #region#Card#
+        private const string FILENAME_CARD3 = "card3.png";
+        private const string NAME_CARD3 = "card3";
+        private const int HP_CARD3 = 100;
+        private const int ATK_CARD3 = 100;
+        private const int DEF_CARD3 = 100;
+        private const int COST_CARD3 = 100;
+        private const string TEXT_CARD3 = "card3";
+        #endregion
+        #region#Card#
+        private const string FILENAME_CARD4 = "card4.png";
+        private const string NAME_CARD4 = "card4";
+        private const int HP_CARD4 = 100;
+        private const int ATK_CARD4 = 100;
+        private const int DEF_CARD4 = 100;
+        private const int COST_CARD4 = 100;
+        private const string TEXT_CARD4 = "card4";
+        #endregion
+        #region#Card#
+        private const string FILENAME_CARD5 = "card5.png";
+        private const string NAME_CARD5 = "card5";
+        private const int HP_CARD5 = 100;
+        private const int ATK_CARD5 = 100;
+        private const int DEF_CARD5 = 100;
+        private const int COST_CARD5 = 100;
+        private const string TEXT_CARD5 = "card5";
+        #endregion
+        #region#Card#
+        //private const string FILENAME_CARD = ".png";
+        //private const string NAME_CARD = "";
+        //private const int HP_CARD = ;
+        //private const int ATK_CARD = ;
+        //private const int DEF_CARD = ;
+        //private const int COST_CARD = ;
+        //private const string TEXT_CARD = "";
+        #endregion
+        #region#Card#
+        //private const string FILENAME_CARD = ".png";
+        //private const string NAME_CARD = "";
+        //private const int HP_CARD = ;
+        //private const int ATK_CARD = ;
+        //private const int DEF_CARD = ;
+        //private const int COST_CARD = ;
+        //private const string TEXT_CARD = "";
+        #endregion
+        #region#Card#
+        //private const string FILENAME_CARD = ".png";
+        //private const string NAME_CARD = "";
+        //private const int HP_CARD = ;
+        //private const int ATK_CARD = ;
+        //private const int DEF_CARD = ;
+        //private const int COST_CARD = ;
+        //private const string TEXT_CARD = "";
+        #endregion
+        #region#Card#
+        //private const string FILENAME_CARD = ".png";
+        //private const string NAME_CARD = "";
+        //private const int HP_CARD = ;
+        //private const int ATK_CARD = ;
+        //private const int DEF_CARD = ;
+        //private const int COST_CARD = ;
+        //private const string TEXT_CARD = "";
+        #endregion
+
 
         #endregion
 
         #endregion
 
-        #region #プロパティ#
+        #endregion
+
+        #region###プロパティ###
         /// <summary>
         /// タイトル画像
         /// </summary>
@@ -121,26 +210,150 @@ namespace CardGame {
         /// バトルフィールド画像
         /// </summary>
         public Image Image_Battle { get; set; }
+        /// <summary>
+        /// カード管理用リスト
+        /// </summary>
+        public List<Card> List_Card { get; set; } = new List<Card>();
+        /// <summary>
+        /// デッキ構成時の各カードの当選確率
+        /// </summary>
+        public Dictionary<Card, double> Dict_Card_Hit_Probability { get; set; } = new Dictionary<Card, double>();
         
+        #region##カード##
+        /// <summary>
+        /// 画像。いっぷく。
+        /// </summary>
+        public Image Image_Card1 { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD1).LocalPath);
+        /// <summary>
+        /// カード。いっぷく。
+        /// </summary>
+        public Card Card1 { get; set; }
+
+        /// <summary>
+        /// 画像。ぺんぎん。
+        /// </summary>
+        public Image Image_Card2 { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD2).LocalPath);
+        /// <summary>
+        /// カード。ぺんぎん。
+        /// </summary>
+        public Card Card2 { get; set; }
+
+        public Image Image_Card3 { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD3).LocalPath);
+        public Card Card3 { get; set; }
+
+        public Image Image_Card4 { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD4).LocalPath);
+        public Card Card4 { get; set; }
+        
+        public Image Image_Card5 { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD5).LocalPath);
+        public Card Card5 { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+        //public Image Image_Card { get; set; } = Image.FromFile(Global.UriOf(FILENAME_CARD)).LocalPath);
+        //public Card Card { get; set; }
+
         #endregion
 
+        #endregion
+
+        /// <summary>
+        /// コンストラクタ。タイトル画像、バトル画面背景画像を取得する
+        /// </summary>
         public Definition() {
-            //実行ファイルまでのパス
-            string path_Exe = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            
-            //実行ファイルからタイトル画像までのパス
-            string relative_Path_Image_Title = RELATIVE_PATH_IMAGE + DIRECTORY_IMAGE + NAME_IMAGE_TITLE;
-            //実行ファイルがあるパスを基準とするタイトル画像までのパス
-            Uri path_Image_Title = new Uri(new Uri(path_Exe), relative_Path_Image_Title);
-            //パスから画像を取得
+            #region#画像取得#
+            //タイトル画像を取得
+            Uri path_Image_Title = Global.UriOf(NAME_IMAGE_TITLE);
             Image_Title = Image.FromFile(path_Image_Title.LocalPath);
 
-            //実行ファイルからバトル画面の背景画像までのパス
-            string relative_Path_Image_Battle = RELATIVE_PATH_IMAGE + DIRECTORY_IMAGE + NAME_IMAGE_BATTLE;
-            //実行ファイルがあるパスを基準とするバトル背景画像までのパス
-            Uri path_Image_Battle = new Uri(new Uri(path_Exe), relative_Path_Image_Battle);
-            //パスから画像を取得
+            //バトル背景画像を取得
+            Uri path_Image_Battle = Global.UriOf(NAME_IMAGE_BATTLE);
             Image_Battle = Image.FromFile(path_Image_Battle.LocalPath);
+            #endregion
+
+            #region#カードの初期化#
+            Card1 = new Card(NAME_CARD1, HP_CARD1, ATK_CARD1, DEF_CARD1, COST_CARD1, TEXT_CARD1, Image_Card1);
+            Card2 = new Card(NAME_CARD2, HP_CARD2, ATK_CARD2, DEF_CARD2, COST_CARD2, TEXT_CARD2, Image_Card2);
+            Card3 = new Card(NAME_CARD3, HP_CARD3, ATK_CARD3, DEF_CARD3, COST_CARD3, TEXT_CARD3, Image_Card3);
+            Card4 = new Card(NAME_CARD4, HP_CARD4, ATK_CARD4, DEF_CARD4, COST_CARD4, TEXT_CARD4, Image_Card4);
+            Card5 = new Card(NAME_CARD5, HP_CARD5, ATK_CARD5, DEF_CARD5, COST_CARD5, TEXT_CARD5, Image_Card5);
+            //Card = new Card(NAME_CARD, HP_CARD, ATK_CARD, DEF_CARD, COST_CARD, TEXT_CARD, Image_Card);
+            //Card = new Card(NAME_CARD, HP_CARD, ATK_CARD, DEF_CARD, COST_CARD, TEXT_CARD, Image_Card);
+            //Card = new Card(NAME_CARD, HP_CARD, ATK_CARD, DEF_CARD, COST_CARD, TEXT_CARD, Image_Card);
+
+
+            #endregion
+
+            #region#カード管理リストへ追加#
+            List_Card.Add(Card1);
+            List_Card.Add(Card2);
+            List_Card.Add(Card3);
+            List_Card.Add(Card4);
+            List_Card.Add(Card5);
+
+            #endregion
+
         }
+
+        /// <summary>
+        /// 当選確率を各カードに持たせる
+        /// </summary>
+        public void InitDictCardHitProbability() {
+            foreach (Card card in List_Card) {
+                //1だと0になってしまうため1.0とする
+                double hit = 1.0 / List_Card.Count;
+                Dict_Card_Hit_Probability.Add(card, hit);
+            }
+        }
+
+        /// <summary>
+        /// カードの当選確率を計算する
+        /// </summary>
+        /// <param name="card"></param>
+        public void CalcCardHitProbability(Card card) {
+            //計算前の当選確率を保存しておく
+            double beforeHitProbability = Dict_Card_Hit_Probability[card];
+            //選ばれたカードの当選確率を下げる
+            Dict_Card_Hit_Probability[card] = Dict_Card_Hit_Probability[card] / PROBABILITY_SUBTRACT;
+            //他のカードの当選確率に加算する値を計算
+            double plusProbability = (beforeHitProbability - Dict_Card_Hit_Probability[card]) / (NUM_DECK - 1);
+            //他のカードの当選確率を上げる
+            foreach (Card otherCard in List_Card) {
+                if(otherCard != card)
+                    Dict_Card_Hit_Probability[otherCard] += plusProbability;
+            }
+        }
+
+        /// <summary>
+        /// カードリストからカードをチョイス
+        /// </summary>
+        /// <returns></returns>
+        public Card ChoiceCard() {
+            //0～1の乱数を生成
+            double hit = new Random().NextDouble();
+            //hitに当てはまる範囲のカードを返す
+            double tail = 0;
+            double head;
+            foreach(Card card in List_Card) {
+                head = tail + Dict_Card_Hit_Probability[card];
+                if (tail <= hit && hit < head) return card;
+                tail = head;
+            }
+            //nullが返るようなら再考
+            return null;
+        }
+
     }
 }

@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Card.cs" />
     <Compile Include="Definition.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

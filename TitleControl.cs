@@ -3,8 +3,14 @@
 namespace CardGame {
     public partial class TitleControl : UserControl {
 
+        /// <summary>
+        /// 定義クラス
+        /// </summary>
         private Definition m_definition;
 
+        /// <summary>
+        /// コンストラクタ。画像、ボタンの位置とサイズ、ボタンの背景所などを調整する
+        /// </summary>
         public TitleControl() {
             InitializeComponent();
             /*Designerクラスでリテラル扱いされる値を変数で再定義*/
@@ -25,13 +31,17 @@ namespace CardGame {
             m_definition = new Definition();
         }
 
+        /// <summary>
+        /// 画面をTitleControlからBattleControlに変更する
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_battleStart_Click(object sender, System.EventArgs e) {
-            //画面をTitleControlからBattleControlに変更する
             Visible = false;
             Enabled = false;
-            MainForm.s_ctrBattle.Visible = true;
-            MainForm.s_ctrBattle.Enabled = true;
-            MainForm.s_ctrBattle.BattleStart();
+            Global.s_ctrBattle.Visible = true;
+            Global.s_ctrBattle.Enabled = true;
+            Global.s_ctrBattle.BattleStart();
         }
     }
 }

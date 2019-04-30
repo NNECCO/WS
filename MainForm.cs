@@ -3,7 +3,7 @@
 namespace CardGame {
     public partial class MainForm : Form {
 
-        #region #フィールド#
+        #region###フィールド###
 
         /// <summary>
         /// 定義クラス
@@ -12,30 +12,20 @@ namespace CardGame {
 
         #endregion
 
-        #region #STATIC#
         /// <summary>
-        /// タイトルのユーザコントロール
+        /// コンストラクタ。タイトルコントロール、バトルコントロールをフォームに追加する。
         /// </summary>
-        public static TitleControl s_ctrTitle = new TitleControl();
-        /// <summary>
-        /// バトル画面のユーザコントロール
-        /// </summary>
-        public static BattleControl s_ctrBattle = new BattleControl();
-        #endregion
-
-
         public MainForm() {
             InitializeComponent();
             //フォームの画面サイズを設定
             Size = new System.Drawing.Size(new System.Drawing.Point(Definition.DISPLAY_WIDTH, Definition.DISPLAY_HEIGHT));
-            //m_definition = new Definition();
-            //タイトルコントルールをフォームに追加
-            Controls.Add(s_ctrTitle);
+            //タイトルコントロールをフォームに追加
+            Controls.Add(Global.s_ctrTitle);
             //タイトルコントロールを表示
-            s_ctrTitle.Visible = true;
-            s_ctrTitle.Enabled = true;
+            Global.s_ctrTitle.Visible = true;
+            Global.s_ctrTitle.Enabled = true;
             //バトルコントロールをフォームに追加
-            Controls.Add(s_ctrBattle);
+            Controls.Add(Global.s_ctrBattle);
             
         }
     }

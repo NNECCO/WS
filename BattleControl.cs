@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -6,11 +9,25 @@ using System.Windows.Forms;
 namespace CardGame {
     public partial class BattleControl : UserControl {
 
+        #region###フィールド###
         /// <summary>
         /// 定義クラス
         /// </summary>
         private Definition m_definition;
-        
+        /// <summary>
+        /// 操作プレイヤー
+        /// </summary>
+        private Player m_playerMe;
+        /// <summary>
+        /// 相手プレイヤー
+        /// </summary>
+        private Player m_playerYou;
+
+        #endregion
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public BattleControl() {
             InitializeComponent();
             /*Designerクラスでリテラル扱いされる値を変数で再定義*/
@@ -22,15 +39,81 @@ namespace CardGame {
             Battle_pictureBox.Size = new Size(Definition.DISPLAY_WIDTH, Definition.DISPLAY_HEIGHT);
 
             m_definition = new Definition();
+
+            //プレイヤーMeとYouを初期化
+            m_playerMe = new Player();
+            m_playerYou = new Player();
+
         }
 
+        /// <summary>
+        /// 背景画像の透明度を下げ、デッキ構築開始textboxを配置する
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BattleControl_Load(object sender, System.EventArgs e) {
+            //背景画像の透明度を下げる
+            float alpha = 0.1f;
+            TransParentBackGroundImage(alpha);
+            //デッキ構築開始textBoxを配置
+            textBox_DeckConstruct.Location = new Point(Definition.BTL_TXTBOX_DECK_CONSTRUCT_X, Definition.BTL_TXTBOX_DECK_CONSTRUCT_Y);
+        }
+
+        /// <summary>
+        /// タイトル画面でバトルスタートボタンを押下すると呼ばれる
+        /// </summary>
         public async void BattleStart() {
             //デッキ構築開始メッセージを画面中央、左から右に走らせる
             await Task.Run(() => AnimateDeckConstructTextBox());
             //デッキを構築する
+            //ConstructDeck(m_playerMe.m_deck);
+            //仮のデッキ構築メソッド
+            TemporaryConstructDeck(m_playerMe.m_deck);
+            //デバッグ
+            foreach (Card card in m_playerMe.m_deck) {
+                Debug.WriteLine(string.Format("{0}", card.Name));
+            }
+            //ConstructDeck(m_playerYou.m_deck);
 
         }
 
+        /// <summary>
+        /// デッキを構築する
+        /// </summary>
+        /// <param name="deck"></param>
+        private void ConstructDeck(List<Card> deck) {
+            //各カードの当選確率を初期化
+            m_definition.InitDictCardHitProbability();           
+            //デッキの枚数が規定値になるまで繰り返す
+            do {
+                //カードリストから１種を選択
+                Card card = m_definition.ChoiceCard();
+                //deckに追加する
+                deck.Add(card);
+                //deckの枚数がDECKNUMならば終了
+                if (Definition.NUM_DECK <= deck.Count) break; 
+                //リストの当選確率を計算する
+                m_definition.CalcCardHitProbability(card);
+            } while (true);
+        }
+
+        void TemporaryConstructDeck(List<Card> deck) {
+            //NUM_DECKになるまでList_Cardからカードを順番でデッキに加える
+            bool complete = false;
+            do {
+                foreach (Card card in m_definition.List_Card) {
+                    deck.Add(card);
+                    if (Definition.NUM_DECK <= deck.Count) {
+                        complete = true;
+                        break;
+                    }
+                }
+            } while (!complete);
+        }
+
+        /// <summary>
+        /// デッキ構築開始メッセージを画面中央、左から右に走らせる
+        /// </summary>
         private void AnimateDeckConstructTextBox() {
             //加速度
             int acceleration = 50;
@@ -74,14 +157,10 @@ namespace CardGame {
             TransParentBackGroundImage(alpha);
         }
 
-        private void BattleControl_Load(object sender, System.EventArgs e) {
-            //背景画像の透明度を下げる
-            float alpha = 0.1f;
-            TransParentBackGroundImage(alpha);
-            //デッキ構築開始textBoxを配置
-            textBox_DeckConstruct.Location = new Point(Definition.BTL_TXTBOX_DECK_CONSTRUCT_X, Definition.BTL_TXTBOX_DECK_CONSTRUCT_Y);
-        }
-
+        /// <summary>
+        /// 背景画像を透明化する
+        /// </summary>
+        /// <param name="alpha"></param>
         private void TransParentBackGroundImage(float alpha) {
             Bitmap bitmap = new Bitmap(Definition.DISPLAY_WIDTH, Definition.DISPLAY_HEIGHT);
             Graphics g = Graphics.FromImage(bitmap);
